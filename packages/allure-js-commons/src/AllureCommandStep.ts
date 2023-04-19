@@ -59,8 +59,6 @@ export interface AllureCommandStep<T = MetadataMessage> {
   ): void | Promise<void>;
 
   description(content: string): void | Promise<void>;
-
-  descriptionHtml(content: string): void | Promise<void>;
 }
 
 export class AllureCommandStepExecutable implements AllureCommandStep {
@@ -206,10 +204,6 @@ export class AllureCommandStepExecutable implements AllureCommandStep {
     this.metadata.description = content;
   }
 
-  descriptionHtml(content: string): void {
-    this.metadata.descriptionHtml = content;
-  }
-
   async step(name: string, body: StepBodyFunction): Promise<void> {
     if (!this.metadata.steps) {
       this.metadata.steps = [];
@@ -232,7 +226,7 @@ export class AllureCommandStepExecutable implements AllureCommandStep {
 
       await res;
 
-      const { steps = [], description = "", descriptionHtml = "", ...metadata } = this.metadata;
+      const { steps = [], description = "", ...metadata } = this.metadata;
 
       return {
         ...metadata,
@@ -248,12 +242,11 @@ export class AllureCommandStepExecutable implements AllureCommandStep {
             parameters: [],
             steps,
             description,
-            descriptionHtml,
           },
         ],
       };
     } catch (err) {
-      const { steps = [], description = "", descriptionHtml = "", ...metadata } = this.metadata;
+      const { steps = [], description = "", ...metadata } = this.metadata;
 
       return {
         ...metadata,
@@ -275,7 +268,6 @@ export class AllureCommandStepExecutable implements AllureCommandStep {
             parameters: [],
             steps,
             description,
-            descriptionHtml,
           },
         ],
       };
