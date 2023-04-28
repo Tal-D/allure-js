@@ -108,7 +108,7 @@ class AllureReporter implements Reporter {
     }
     const project = suite.project()!;
     if (project?.name) {
-      allureTest.addParameter("Project", project.name);
+      allureTest.parameter("Project", project.name);
     }
 
     const relativeFile = path
@@ -193,7 +193,7 @@ class AllureReporter implements Reporter {
         metadata.links?.forEach((val) => allureTest.addLink(val.url, val.name, val.type));
         metadata.labels?.forEach((val) => allureTest.addLabel(val.name, val.value));
         metadata.parameter?.forEach((val) =>
-          allureTest.addParameter(val.name, val.value, {
+          allureTest.parameter(val.name, val.value, {
             excluded: val.excluded,
             mode: val.mode,
           }),
